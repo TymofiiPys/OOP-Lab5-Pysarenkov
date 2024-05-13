@@ -2,7 +2,7 @@ package com.restaurant.mapper;
 
 import com.restaurant.dto.OrderDTO;
 import com.restaurant.dto.OrderReceiveDTO;
-import com.restaurant.model.Order;
+import com.restaurant.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

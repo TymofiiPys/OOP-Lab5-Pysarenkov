@@ -1,6 +1,6 @@
 package com.restaurant.dto;
 
-import com.restaurant.model.Order;
+import com.restaurant.entity.Order;
 import lombok.Builder;
 import lombok.Data;
 

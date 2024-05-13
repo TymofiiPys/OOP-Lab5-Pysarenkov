@@ -2,7 +2,7 @@ package com.restaurant.mapper;
 
 import com.restaurant.dto.PaymentCreateDTO;
 import com.restaurant.dto.PaymentDisplayDTO;
-import com.restaurant.model.Payment;
+import com.restaurant.entity.Payment;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
