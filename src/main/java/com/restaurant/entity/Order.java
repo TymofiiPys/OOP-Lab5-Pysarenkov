@@ -14,7 +14,7 @@ import lombok.ToString;
 public class Order {
     @Id
     @Column(name = "id")
-    private int id;
+    private Long id;
     @Column(name = "client_id")
     private int clientId;
     @Column(name = "menu_id")
