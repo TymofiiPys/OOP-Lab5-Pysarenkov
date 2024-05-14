@@ -90,7 +90,7 @@ public class OrderService {
             orderToAdd.setClientId(clientId);
             orderToAdd.setMenuId(Long.parseLong(menuId));
             orderToAdd.setAmount(orders.getMenuAmts().get(menuId));
-            orderToAdd.setStatus(Order.StatusOrder.ORDERED);
+            orderToAdd.setStatus(Order.StatusOrder.ordered);
 
             orderList.add(orderToAdd);
         }
@@ -99,7 +99,7 @@ public class OrderService {
 
     private Optional<Order.StatusOrder> checkStatus(String statusStr) {
         try {
-            Order.StatusOrder status = Order.StatusOrder.valueOf(statusStr);
+            Order.StatusOrder status = Order.StatusOrder.valueOf(statusStr.toLowerCase());
             return Optional.of(status);
         } catch (IllegalArgumentException e) {
             return Optional.empty();

@@ -17,8 +17,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Date;
 
-@Component
-@RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(
@@ -50,6 +48,6 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return "/auth".equals(path);
+        return "/lab4/auth".equals(path);
     }
 }
