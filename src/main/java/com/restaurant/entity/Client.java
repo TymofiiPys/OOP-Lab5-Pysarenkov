@@ -17,4 +17,8 @@ public class Client {
     private String email;
     @Column(name = "is_admin")
     private boolean isAdmin;
+    @Column(name = "password")
+    private String hash;
+    @Column(name = "salt")
+    private String salt;
 }
