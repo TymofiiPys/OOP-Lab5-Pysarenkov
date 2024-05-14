@@ -23,7 +23,7 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final ClientRepository clientRepository;
     private final PaymentMapper mapper = PaymentMapper.INSTANCE;
-    public PaymentCreateDTO createPayment(List<PaymentCreateDTO> payment) {
+    public PaymentDisplayDTO createPayment(List<PaymentCreateDTO> payment) {
         double cost = payment.stream().map(PaymentCreateDTO::getCost).reduce(0., Double::sum);
         Payment paymentReduced = new Payment();
         paymentReduced.setClientId(payment.getFirst().getClientId());
@@ -31,7 +31,7 @@ public class PaymentService {
         paymentReduced.setCost(cost);
         Payment createdPayment = paymentRepository.save(paymentReduced);
 //        if(createdPayment == null) return null;
-        return mapper.toPaymentDTO(createdPayment);
+        return mapper.toPaymentDisplayDTO(createdPayment);
     }
 
     public List<PaymentDisplayDTO> getAllPayments() {
