@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MenuDTO {
-    private int id;
+    private Long id;
     private String name;
     private boolean mealOrDrink;
     private double cost;
