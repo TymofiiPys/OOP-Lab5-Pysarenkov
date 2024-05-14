@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class OrderDisplayDTO {
-    private int id;
+    private Long id;
     private String clientName;
     private String menuItemName;
     private int amount;

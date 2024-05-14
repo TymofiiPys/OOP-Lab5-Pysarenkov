@@ -16,9 +16,9 @@ public class Order {
     @Column(name = "id")
     private Long id;
     @Column(name = "client_id")
-    private int clientId;
+    private Long clientId;
     @Column(name = "menu_id")
-    private int menuId;
+    private Long menuId;
     @Column(name = "amount")
     private int amount;
     @Column(name = "status")
