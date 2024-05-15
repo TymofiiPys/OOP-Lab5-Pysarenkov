@@ -30,7 +30,9 @@ public class PaymentService {
         paymentReduced.setCost(payment.getCost());
         Payment createdPayment = paymentRepository.save(paymentReduced);
 //        if(createdPayment == null) return null;
-        return mapper.toPaymentDisplayDTO(createdPayment);
+        PaymentDisplayDTO ret = mapper.toPaymentDisplayDTO(createdPayment);
+        ret.setTimeStr(ret.getTime().toString());
+        return ret;
     }
 
     public List<PaymentDisplayDTO> getAllPayments() {
@@ -42,6 +44,7 @@ public class PaymentService {
                 payment.setClientName(client.get().getEmail());
             else
                 payment.setClientName("");
+            payment.setTimeStr(payment.getTime().toString());
         }
         return paymentsToDisplay;
     }
