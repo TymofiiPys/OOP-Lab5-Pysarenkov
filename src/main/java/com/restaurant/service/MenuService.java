@@ -20,7 +20,6 @@ public class MenuService {
     public List<MenuDTO> getMenu() {
 //        log.info("Parsed menu from DB");
         List<Menu> menus = menuRepository.findAll();
-//        if (menus == null) return null;
         return menus.stream().map(mapper::toMenuDTO).toList();
     }
 

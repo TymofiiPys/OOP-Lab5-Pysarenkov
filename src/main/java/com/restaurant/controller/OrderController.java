@@ -1,22 +1,18 @@
 package com.restaurant.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.restaurant.dto.OrderDTO;
 import com.restaurant.dto.OrderDisplayDTO;
 import com.restaurant.dto.OrderReceiveDTO;
 import com.restaurant.entity.Client;
 import com.restaurant.service.OrderService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/orders")
@@ -34,12 +30,10 @@ public class OrderController {
         if (which == null) {
             orders = orderService.getAllOrders();
         } else {
-//            Client client = (Client) req.getAttribute("client");
             if (admin != null) {
-//                if (!client.isAdmin()) {
-//                    resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//                    return;
-//                }
+                if (!client.isAdmin()) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+                }
                 orders = orderService.getOrdersFilteredByStatus(which);
             } else {
                 orders = orderService.getOrdersFilteredByStatusAndId(which, client.getId());
@@ -72,14 +66,13 @@ public class OrderController {
     @PutMapping
     public ResponseEntity<Void> updateOrderStatus(
             @RequestBody List<Long> orderIdsToUpdate,
-            @RequestParam(name = "status") String status
+            @RequestParam(name = "status") String status,
+            @RequestAttribute(name = "client") Client client
     ) {
         if (status.equals("ISSUED_FOR_PAYMENT")) {
-//            Client client = (Client) req.getAttribute("client");
-//            if (!client.isAdmin()) {
-//                resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//                return;
-//            }
+            if (!client.isAdmin()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
         }
         int updatedRows = orderService.updateOrderStatus(orderIdsToUpdate, status);
         if (updatedRows < 0) {
@@ -89,29 +82,4 @@ public class OrderController {
         }
         return ResponseEntity.ok().build();
     }
-//
-//    @Override
-//    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        List<Integer> orderIdsToIssue = Arrays.asList(
-//                objectMapper.readValue(
-//                        req.getReader().lines().collect(Collectors.joining()),
-//                        Integer[].class
-//                )
-//        );
-//        if (req.getParameter("status").equals("ISSUED_FOR_PAYMENT")) {
-//            Client client = (Client) req.getAttribute("client");
-//            if (!client.isAdmin()) {
-//                resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//                return;
-//            }
-//        }
-//        int updatedRows = orderService.updateOrderStatus(orderIdsToIssue, req.getParameter("status"));
-//        if (updatedRows < 0) {
-//            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//        } else if (updatedRows == 0) {
-//            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//        } else {
-//            resp.setStatus(HttpServletResponse.SC_OK);
-//        }
-//    }
 }

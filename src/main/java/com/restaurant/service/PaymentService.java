@@ -35,6 +35,7 @@ public class PaymentService {
     }
 
     public List<PaymentDisplayDTO> getAllPayments() {
+        //TODO: same as in lab4, IT'SNOTALIST
         List<Payment> payments = paymentRepository.findAll();
         List<PaymentDisplayDTO> paymentsToDisplay = payments.stream().map(mapper::toPaymentDisplayDTO).toList();
         for (var payment : paymentsToDisplay) {

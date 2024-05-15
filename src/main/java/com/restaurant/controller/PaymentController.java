@@ -2,9 +2,10 @@ package com.restaurant.controller;
 
 import com.restaurant.dto.PaymentCreateDTO;
 import com.restaurant.dto.PaymentDisplayDTO;
+import com.restaurant.entity.Client;
 import com.restaurant.service.PaymentService;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +18,12 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @GetMapping
-    public ResponseEntity<List<PaymentDisplayDTO>> getPayments() {
-//        Client client = objectMapper.readValue(
-//                req.getAttribute("client").toString(),
-//                Client.class
-//        );
-//        if(!client.isAdmin()) {
-//            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//        }
+    public ResponseEntity<List<PaymentDisplayDTO>> getPayments(
+            @RequestAttribute(name = "client") Client client
+    ) {
+        if (!client.isAdmin()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         List<PaymentDisplayDTO> payments = paymentService.getAllPayments();
         if (payments == null)
             return ResponseEntity.badRequest().build();

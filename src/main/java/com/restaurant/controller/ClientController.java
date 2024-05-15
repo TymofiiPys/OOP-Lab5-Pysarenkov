@@ -3,7 +3,6 @@ package com.restaurant.controller;
 import com.restaurant.dto.AuthToken;
 import com.restaurant.dto.LoginDTO;
 import com.restaurant.service.ClientService;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
