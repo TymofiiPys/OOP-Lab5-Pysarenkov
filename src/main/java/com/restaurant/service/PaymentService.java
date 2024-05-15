@@ -23,19 +23,17 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final ClientRepository clientRepository;
     private final PaymentMapper mapper = PaymentMapper.INSTANCE;
-    public PaymentDisplayDTO createPayment(List<PaymentCreateDTO> payment) {
-        double cost = payment.stream().map(PaymentCreateDTO::getCost).reduce(0., Double::sum);
+    public PaymentDisplayDTO createPayment(PaymentCreateDTO payment, Long clientId) {
         Payment paymentReduced = new Payment();
-        paymentReduced.setClientId(payment.getFirst().getClientId());
+        paymentReduced.setClientId(clientId);
         paymentReduced.setTime(new Timestamp(new Date().getTime()));
-        paymentReduced.setCost(cost);
+        paymentReduced.setCost(payment.getCost());
         Payment createdPayment = paymentRepository.save(paymentReduced);
 //        if(createdPayment == null) return null;
         return mapper.toPaymentDisplayDTO(createdPayment);
     }
 
     public List<PaymentDisplayDTO> getAllPayments() {
-        //TODO: same as in lab4, IT'SNOTALIST
         List<Payment> payments = paymentRepository.findAll();
         List<PaymentDisplayDTO> paymentsToDisplay = payments.stream().map(mapper::toPaymentDisplayDTO).toList();
         for (var payment : paymentsToDisplay) {

@@ -8,7 +8,6 @@ import com.restaurant.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +25,6 @@ public class MenuService {
     public MenuDTO createMenu(MenuCreateDTO menuCreateDTO) {
         Menu menu = mapper.fromMenuCreate(menuCreateDTO);
         Menu createdItem = menuRepository.save(menu);
-//        if (createdItem == null) return null;
         return mapper.toMenuDTO(createdItem);
     }
 
@@ -39,10 +37,7 @@ public class MenuService {
             menu.setCost(menuToUpdate.getCost());
             Menu updated = menuRepository.save(menu);
         }
-        return 0;
-//        Menu menu = mapper.fromMenuDTO(menuToUpdate);
-//        List<MenuDTO> updatedMenu = new ArrayList<>();
-//        return menuRepository.;
+        return menuOptional.isPresent() ? 1 : 0;
     }
 
     public boolean deleteMenu(Long menuId) {

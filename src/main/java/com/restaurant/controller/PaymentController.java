@@ -31,9 +31,12 @@ public class PaymentController {
     }
 
     @PostMapping
-    public ResponseEntity<PaymentDisplayDTO> createPayment(@RequestBody List<PaymentCreateDTO> payments) {
-        PaymentDisplayDTO createdPayment = paymentService.createPayment(payments);
-        if(createdPayment == null) {
+    public ResponseEntity<PaymentDisplayDTO> createPayment(
+            @RequestBody PaymentCreateDTO payments,
+            @RequestAttribute(name = "client") Client client
+    ) {
+        PaymentDisplayDTO createdPayment = paymentService.createPayment(payments, client.getId());
+        if (createdPayment == null) {
             return ResponseEntity.badRequest().build();
         } else {
             return ResponseEntity.ok(createdPayment);
