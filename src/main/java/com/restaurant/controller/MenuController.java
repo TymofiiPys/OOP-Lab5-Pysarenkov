@@ -26,6 +26,17 @@ public class MenuController {
         return ResponseEntity.ok(menu);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<MenuDTO> getSingleMenu(
+            @PathVariable Long id
+    ) {
+        MenuDTO menu = menuService.getMenu(id);
+        if (menu == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(menu);
+    }
+
     @PostMapping
     public ResponseEntity<MenuDTO> createMenu(
             @RequestBody MenuCreateDTO menuToCreate,
@@ -58,12 +69,12 @@ public class MenuController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteMenu(
-            @RequestBody Long menuIdToDelete,
-                                           @RequestAttribute(name = "client") Client client
+            @PathVariable(name = "id") Long menuIdToDelete,
+            @RequestAttribute(name = "client") Client client
     ) {
-        if(!client.isAdmin()) {
+        if (!client.isAdmin()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         boolean deleted = menuService.deleteMenu(menuIdToDelete);

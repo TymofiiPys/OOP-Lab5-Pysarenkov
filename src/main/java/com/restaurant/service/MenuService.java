@@ -22,6 +22,12 @@ public class MenuService {
         return menus.stream().map(mapper::toMenuDTO).toList();
     }
 
+    public MenuDTO getMenu(Long id) {
+//        log.info("Parsed menu from DB");
+        Optional<Menu> menu = menuRepository.findById(id);
+        return menu.map(mapper::toMenuDTO).orElse(null);
+    }
+
     public MenuDTO createMenu(MenuCreateDTO menuCreateDTO) {
         Menu menu = mapper.fromMenuCreate(menuCreateDTO);
         Menu createdItem = menuRepository.save(menu);
